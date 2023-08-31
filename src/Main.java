@@ -17,12 +17,12 @@ public class Main {
             return res; //?
         }
 
-        /*for (int i = 0; i < numCourses; i++) {
+        for (int i = 0; i < numCourses; i++) {
             open.add(i);
-        }*/
+        }
 
         for (int i = 0; i < prerequisites.length; i++) {
-            open.add(prerequisites[i][1]);
+            //open.add(prerequisites[i][1]);
             blocked.add(prerequisites[i][0]);
         }
 
@@ -51,7 +51,17 @@ public class Main {
         System.out.println("open " + open);
         System.out.println("blocked " + blocked);
 
-        int[] array = open.stream().mapToInt(Integer::intValue).toArray();
+        flag = true;
+        for (int i = 0; i < prerequisites.length; i++) {
+            if (prerequisites[i][1] != -1) {
+                flag = false;
+                break;
+            }
+        }
+        int[] array = {};
+        if (flag) {
+            array = open.stream().mapToInt(Integer::intValue).toArray();
+        }
         return array;
     }
 
@@ -66,7 +76,7 @@ public class Main {
 
         System.out.println(
                 Arrays.toString(
-                        findOrder(numCourses3, prerequisites3)
+                        findOrder(numCourses1, prerequisites1)
                 )
         );
     }
