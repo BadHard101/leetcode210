@@ -9,7 +9,19 @@ public class Main {
         LinkedHashSet<Integer> open = new LinkedHashSet<>();
         ArrayList<Integer> blocked = new ArrayList<>();
 
-        for (int i = 0; i < numCourses; i++) {
+        if (prerequisites.length == 0) {
+            int[] res = new int[numCourses];
+            for (int i = 0; i < numCourses; i++) {
+                res[i] = i;
+            }
+            return res; //?
+        }
+
+        /*for (int i = 0; i < numCourses; i++) {
+            open.add(i);
+        }*/
+
+        for (int i = 0; i < prerequisites.length; i++) {
             open.add(prerequisites[i][1]);
             blocked.add(prerequisites[i][0]);
         }
@@ -19,12 +31,15 @@ public class Main {
         System.out.println("open " + open);
         System.out.println("blocked " + blocked);
 
-        boolean flag = false;
+        boolean flag = true;
         while (flag) {
             flag = false;
-            for (int i = 0; i < numCourses; i++) {
+            for (int i = 0; i < prerequisites.length; i++) {
+                if (prerequisites[i][1] == -1) continue;
                 if (open.contains(prerequisites[i][1])) {
                     blocked.remove(Integer.valueOf(prerequisites[i][0]));
+                    prerequisites[i][1] = -1;
+                    flag = true;
                     if (!blocked.contains(prerequisites[i][0])) {
                         open.add(prerequisites[i][0]);
                     }
@@ -42,12 +57,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int numCourses = 4;
-        int[][] prerequisites = {{1,0},{3,2},{2,0},{3,1}};
+        int numCourses1 = 2;
+        int numCourses2 = 4;
+        int numCourses3 = 1;
+        int[][] prerequisites1 = {{1,0}};
+        int[][] prerequisites2 = {{1,0},{3,2},{2,0},{3,1}};
+        int[][] prerequisites3 = {};
 
         System.out.println(
                 Arrays.toString(
-                        findOrder(numCourses, prerequisites)
+                        findOrder(numCourses3, prerequisites3)
                 )
         );
     }
